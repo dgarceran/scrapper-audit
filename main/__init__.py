@@ -65,7 +65,7 @@ def iterateUrls():
     for url in urls:
         #print(url)
         if(url not in alreadyChecked):
-            crawler(url)
+            crawler(url, hdr)
 
 def get_ext(url):
     """Return the filename extension from url, or ''."""
