@@ -24,7 +24,7 @@ def getInfoImage(url, alt, title, hdr):
     im=Image.open(file)
     width, height = im.size
 
-    if imageNotExists:
+    if imageNotExists(url.geturl()):
         insertImage(url.geturl(), alt, title, height, width, size, "")
 
 def insertImage(link, alt, title, height, width, size, extra):
