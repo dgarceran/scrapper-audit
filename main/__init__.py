@@ -2,7 +2,7 @@ from urllib import request, parse
 from urllib.request import urlopen, HTTPError, urlparse
 from os.path import splitext
 from lxml import html
-from main import links, imgs, title_headers
+from main import links, imgs, title_headers, scripts
 from main.config import *
 
 url = URL
@@ -11,9 +11,9 @@ hdr = HDR
 urls = []
 alreadyChecked = []
 
-def initialCall(url):
+def initialCall(url, hdr):
 
-
+    scripts.scriptsService(url, hdr)
     crawler(url, hdr)
     iterateUrls()
 
@@ -21,6 +21,7 @@ def initialCall(url):
 
 def crawler(url, hdr):
     "Gets all the links of a website"
+    print("STARTING THE PROGRAM.")
 
     alreadyChecked.append(url)
 
@@ -29,7 +30,7 @@ def crawler(url, hdr):
         print(url)
 
         if (url.scheme == ''):
-            url._replace(scheme="http")
+            url = url._replace(scheme="http")
 
         endingurl = get_ext(url.geturl())
 
@@ -76,4 +77,4 @@ def get_ext(url):
     root, ext = splitext(parsed.path)
     return ext[1:]  # or ext[1:] if you don't want the leading '.'
 
-initialCall(url)
+initialCall(url, hdr)

@@ -2,7 +2,7 @@ import io
 from PIL import Image
 from urllib import request, parse
 from urllib.request import urlopen, urlparse
-from lxml import cssselect
+from lxml import cssselect,html
 from main import db
 from main.config import *
 
