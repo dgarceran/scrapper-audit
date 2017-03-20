@@ -6,7 +6,7 @@ from lxml import cssselect
 from main import db
 from main.config import *
 
-def getInfoImage(url, alt, title, hdr):
+def getInfoImage(url, alt, title, hdr, url_origin):
     url = urlparse(url)
     if(url.netloc == ''):
         url = url._replace(netloc=URL_BASE)
@@ -24,25 +24,25 @@ def getInfoImage(url, alt, title, hdr):
     im=Image.open(file)
     width, height = im.size
 
-    if imageNotExists(url.geturl()):
-        insertImage(url.geturl(), alt, title, height, width, size, "")
+    if imageNotExists(url.geturl(), url_origin):
+        insertImage(url.geturl(), alt, title, height, width, size, url_origin)
 
-def insertImage(link, alt, title, height, width, size, extra):
+def insertImage(link, alt, title, height, width, size, url_origin):
     try:
         with db.connection.cursor() as cursor:
             # Create a new record
-            sql = "INSERT INTO `images` (`link`, `alt_tag`, `title`, `height`, `width`, `size`, `extra`) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            cursor.execute(sql, (link, alt, title, height, width, size, extra))
+            sql = "INSERT INTO `images` (`link`, `alt_tag`, `title`, `height`, `width`, `size`, `origin`) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            cursor.execute(sql, (link, alt, title, height, width, size, url_origin))
         db.connection.commit()
     except:
         raise
 
-def imageNotExists(link):
+def imageNotExists(link, url_origin):
     try:
         with db.connection.cursor() as cursor:
              # Read a single record
-             sql = "SELECT `id` FROM `images` WHERE `link`=%s"
-             cursor.execute(sql, (link))
+             sql = "SELECT `id` FROM `images` WHERE `link`=%s and `origin`=%s"
+             cursor.execute(sql, (link, url_origin))
              result = cursor.fetchone()
              if(result is None):
                 return True
@@ -51,7 +51,7 @@ def imageNotExists(link):
     except:
         raise
 
-def imageService(tree, hdr):
+def imageService(tree, hdr, url_origin):
     selectImg = cssselect.CSSSelector("img")
     for el in selectImg(tree):
         src = ""
@@ -80,4 +80,4 @@ def imageService(tree, hdr):
             print("none title")
             raise
 
-        getInfoImage(src, alt_tag, title, hdr)
+        getInfoImage(src, alt_tag, title, hdr, url_origin)

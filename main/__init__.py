@@ -52,7 +52,7 @@ def crawler(url, hdr):
                 title_headers.headersService(tree, url.geturl())
 
                 # IMAGES
-                imgs.imageService(tree, hdr)
+                imgs.imageService(tree, hdr, url.geturl())
 
             except HTTPError:
                 links.save404(url)
