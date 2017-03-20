@@ -4,15 +4,20 @@ from urllib import request, parse
 from urllib.request import urlopen, urlparse
 from lxml import cssselect
 from main import db
+from main.config import *
 
 def getInfoImage(url, alt, title, hdr):
-
     url = urlparse(url)
+    if(url.netloc == ''):
+        url = url._replace(netloc=URL_BASE)
+
+    if(url.scheme == ''):
+        url = url._replace(scheme='http')
     req = request.Request(url.geturl(), headers=hdr)
     req.selector = parse.quote(req.selector)
     file = io.BytesIO(urlopen(req).read())
 
-    # THE SIZE
+    # THE SIZEº
     size = file.__sizeof__()
 
     # THE WIDTH / HEIGHT

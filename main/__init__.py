@@ -2,7 +2,7 @@ from urllib import request, parse
 from urllib.request import urlopen, HTTPError, urlparse
 from os.path import splitext
 from lxml import html
-from main import links, imgs
+from main import links, imgs, title_headers
 from main.config import *
 
 url = URL
@@ -47,6 +47,9 @@ def crawler(url, hdr):
                 tree = html.fromstring(pagedecoded)
                 # LINKS
                 links.linksService(tree)
+
+                # TITLE HEADERS
+                title_headers.headersService(tree, url.geturl())
 
                 # IMAGES
                 imgs.imageService(tree, hdr)
