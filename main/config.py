@@ -1,15 +1,15 @@
-
+# Here goes all the globals of the program.
 
 # Crawler globals
-URL = "http://www.davidgarceran.com/"
-URL_BASE = "www.davidgarceran.com"
-URL_BASE2 = "davidgarceran.com"
+URL = ""
+URL_BASE = ""
+URL_BASE2 = ""
 
 # DB globals
 DB_PASS = ''
-DB_USER = 'root'
-DB_TABLE = 'audit'
-DB_HOST = 'localhost'
+DB_USER = ''
+DB_TABLE = ''
+DB_HOST = ''
 
 # Other globals less generic
 
