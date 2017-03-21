@@ -72,6 +72,7 @@ def linksService(tree):
                 if (profundidad < 0):
                     profundidad = 0
                 main.urls.append(link)
+                print("Found link: " + link)
                 if endingurl != 'jpg' and endingurl != 'pdf' and endingurl != 'png' and endingurl != 'gif' and endingurl != 'zip' and endingurl != 'rar' and endingurl != 'doc' and endingurl != 'xls' and endingurl != 'lsx' and endingurl != 'ppt':
                     insert(link, text, target, "url", profundidad)
                 else:
@@ -81,6 +82,7 @@ def linksService(tree):
                 if (link not in otherUrls):
                     profundidad = len(urlparse(link).path.split('/'))
                     # print("another url ", link)
+                    print("Found external link: " + link)
                     otherUrls.append(link)
                     if endingurl != 'jpg' and endingurl != 'pdf' and endingurl != 'png' and endingurl != 'gif' and endingurl != 'zip' and endingurl != 'rar' and endingurl != 'doc' and endingurl != 'xls' and endingurl != 'lsx' and endingurl != 'ppt':
                         insert(link, text, target, "otras", profundidad)
@@ -109,15 +111,15 @@ def closeConnection():
 def linkNotExists(link):
     try:
         with db.connection.cursor() as cursor:
+            link = urlparse(link)
+            link = link._replace(fragment='')
             # Read a single record
             sql = "SELECT `id` FROM `links` WHERE `link`=%s"
-            cursor.execute(sql, (link))
+            cursor.execute(sql, (link.geturl()))
             result = cursor.fetchone()
             if(result is None):
-                #print("is none")
-                return True
+                return True # Link does not exist
             else:
-                #print("already exists")
                 return False
     except:
         raise

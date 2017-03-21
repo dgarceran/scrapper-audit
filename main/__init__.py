@@ -10,10 +10,12 @@ hdr = HDR
 
 urls = []
 alreadyChecked = []
+check_images = True
 
 def initialCall(url, hdr):
 
-    scripts.scriptsService(url, hdr)
+    #scripts.scriptsService(url, hdr)
+    print("STARTING THE PROGRAM.")
     crawler(url, hdr)
     iterateUrls()
 
@@ -21,7 +23,6 @@ def initialCall(url, hdr):
 
 def crawler(url, hdr):
     "Gets all the links of a website"
-    print("STARTING THE PROGRAM.")
 
     alreadyChecked.append(url)
 
@@ -53,7 +54,9 @@ def crawler(url, hdr):
                 title_headers.headersService(tree, url.geturl())
 
                 # IMAGES
-                imgs.imageService(tree, hdr, url.geturl())
+                if check_images == True:
+                    # Images are the slower part of the program, so we avoid unnecessary checks
+                    imgs.imageService(tree, hdr, url.geturl())
 
             except HTTPError:
                 links.save404(url)

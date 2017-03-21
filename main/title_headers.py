@@ -1,5 +1,6 @@
 from lxml import cssselect, etree
 from main import db
+import main
 
 def headersService(tree, link):
     selectTitle = cssselect.CSSSelector("h1")
@@ -9,10 +10,16 @@ def headersService(tree, link):
         for el in selectTitle(tree):
             texto = etree.tostring(el)
             if headerNotExists(link, texto):
+                main.check_images = True
                 insertHeader(link, cantidad, texto)
+            else:
+                main.check_images = False
     else:
         if headerNotExists(link, ""):
+            main.check_images = True
             insertHeader(link, cantidad, "")
+        else:
+            main.check_images = False
 
 def insertHeader(link, cantidad, texto):
     try:

@@ -8,6 +8,7 @@ from main.config import *
 
 def getInfoImage(url, alt, title, hdr, url_origin):
     url = urlparse(url)
+    print("Checking img: " + url.geturl())
     if(url.netloc == ''):
         url = url._replace(netloc=URL_BASE)
 
