@@ -5,11 +5,6 @@ import main
 from main import db
 from main.config import *
 
-# LINK CRAWLER
-#
-# By David Garcerán - DEIDEAS Marketing Solutions.
-# dgarceran@deideasmarketing.com
-
 otherUrls = []
 filesUrls = []
 images = []

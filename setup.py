@@ -6,8 +6,8 @@ setup(
     packages=['main'],
     url='',
     license='',
-    author='David Garcerán',
-    author_email='dgarceran@deideasmarketing.com',
+    author='David Garceran',
+    author_email='david@dgarceran.com',
     description='SEO Utils'
 )
 

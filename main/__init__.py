@@ -14,7 +14,7 @@ check_images = True
 
 def initialCall(url, hdr):
 
-    #scripts.scriptsService(url, hdr)
+    scripts.scriptsService(url, hdr)
     print("STARTING THE PROGRAM.")
     crawler(url, hdr)
     iterateUrls()
